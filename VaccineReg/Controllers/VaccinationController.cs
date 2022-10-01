@@ -14,7 +14,7 @@ namespace VaccineReg.Controllers
         [HttpGet]
         public ActionResult Registration()
         {
-            return View();
+            return View("Registration");
         }
         
         [HttpPost]
