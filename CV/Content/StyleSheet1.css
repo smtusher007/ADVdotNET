@@ -1,0 +1,32 @@
+﻿body {
+    padding-top: 50px;
+
+}
+header{
+    background: deepskyblue;
+    height: 50px;
+    position: fixed;
+    top: 0;
+    transition: top 0.3s ease-in-out;
+    width: 99%;
+}
+.single-navs{
+    text-align: center;
+}
+.single-navs a{
+    color: #ffffff;
+    text-decoration: none;
+    text-align: center;
+    font-family: montserrat;
+    margin: 0 20px;
+    line-height: 2.5;
+    font-weight: 700;
+    font-size: 20px;
+}
+.center {
+    display: block;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: auto;
+    
+}
