@@ -15,5 +15,8 @@ namespace VaccineReg.Models
         [Required]
         [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail is not valid")]
         public string email { get; set; }
+        [Required]
+        [RegularExpression(@"^(?:\+? 88 | 0088)?01[15-9]\d{8}$", ErrorMessage="Phone Number is not Correct")]
+        public string phoneNo { get; set; }
     }
 }

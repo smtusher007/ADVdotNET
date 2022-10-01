@@ -18,14 +18,18 @@ namespace VaccineReg.Controllers
         }
         
         [HttpPost]
-        public ActionResult Confirm(Vaccine vaccine)
+        public ActionResult Registration(Vaccine vaccine)
         {
             if (ModelState.IsValid)
             {
                 return RedirectToAction("Confirm", "Vaccination");
             }
-            ViewBag.VaccineRegistration = vaccine.name;
+        
             return View(vaccine);
+        }
+        public ActionResult Confirm()
+        {
+            return View();
         }
  
 

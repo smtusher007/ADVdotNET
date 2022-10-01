@@ -22,10 +22,12 @@
     <tr>
         <td>
             <center>
-                <form action="/Vaccination/Confirm" method="post">
+                <form action="/Vaccination/Registration" method="post">
                     @Html.ValidationMessage("name")
                     <input type="text" name="name" placeholder="Name" value="" />
+                    @Html.ValidationMessage("email")
                     <input type="email" name="email" placeholder="Email" value="" />
+                    @Html.ValidationMessage("phoneNo")
                     <input type="type" name="phoneNo" placeholder="Phone No" value="" /> <br /> <br />
                     <input type="type" name="dob" placeholder="Date of Birth" value="" />
                     <select name="bgroup" id="bgroup">
