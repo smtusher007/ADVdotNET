@@ -22,7 +22,8 @@
     <tr>
         <td>
             <center>
-                <form action="" method="post">
+                <form action="/Vaccination/Confirm" method="post">
+                    @Html.ValidationMessage("name")
                     <input type="text" name="name" placeholder="Name" value="" />
                     <input type="email" name="email" placeholder="Email" value="" />
                     <input type="type" name="phoneNo" placeholder="Phone No" value="" /> <br /> <br />
