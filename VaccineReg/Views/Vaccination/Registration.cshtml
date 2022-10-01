@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "Registration";
+}
+
+<h2>Registration</h2>
+
+<table width="100%" border="0">
+    <tr>
+        <td>
+            <center>
+                <a href="/Home/Contact">Contact</a> ||
+                <a href="/Home/About">About</a>
+            </center>
+        </td>
+    </tr>
+    <tr>
+        <td height="50 px">
+            <center>Registration Form</center>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <center>
+                <form action="" method="post">
+                    <input type="text" name="name" placeholder="Name" value="" />
+                    <input type="email" name="email" placeholder="Email" value="" />
+                    <input type="type" name="phoneNo" placeholder="Phone No" value="" /> <br /> <br />
+                    <input type="type" name="dob" placeholder="Date of Birth" value="" />
+                    <select name="bgroup" id="bgroup">
+                        <option value="">Blood Group</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                    </select>
+                    <select name="gender" id="gender">
+                        <option value="">Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="others">Others</option>
+                    </select> <br /> <br />
+                    <input type="password" name="password" placeholder="Password" value="" />
+                    <input type="password" name="conPassword" placeholder="Confirm Password" value="" /> <br /> <br />
+                    <input type="submit" class="btn btn-success" value="Submit" />
+                </form>
+            </center>
+        </td>
+    </tr>
+</table>
