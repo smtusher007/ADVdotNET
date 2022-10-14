@@ -30,7 +30,7 @@ namespace Shopping.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        [HttpGet]
+        [HttpPost]
         public ActionResult AddCart(int Id)
         {
             var db = new ECommerceEntities();
