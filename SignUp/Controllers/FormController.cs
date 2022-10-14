@@ -13,5 +13,9 @@ namespace SignUp.Controllers
         {
             return View();
         }
+        public ActionResult SignUp()
+        {
+            return View();
+        }
     }
 }
