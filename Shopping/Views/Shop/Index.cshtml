@@ -14,15 +14,18 @@
         <th></th>
         <th></th>
     </tr>
-    @foreach(var p in Model)
-            {
-                <tr>
-                    <td>@p.Id</td>
-                    <td>@p.Name</td>
-                    <td>@p.Price</td>
-                    <td>@p.Qty</td>
-                    <td><a href="/Shop/AddCart/@p.Id" class="btn btn-info">Add to Cart</a></td>
-                    <td><a href="/Shop/RemoveCart" class="btn btn-danger">Remove from Cart</a></td>
-                </tr>
-            }
+    @foreach (var p in Model)
+    {
+        <tr>
+            <td>@p.Id</td>
+            <td>@p.Name</td>
+            <td>@p.Price</td>
+            <td>@p.Qty</td>
+            <td><a href="/Shop/AddCart/@p.Id" class="btn btn-info">Add to Cart</a></td>
+            <td><a href="/Shop/RemoveCart" class="btn btn-danger">Remove from Cart</a></td>
+        </tr>
+
+    }
+    
 </table>
+<a href="/Shop/ViewCart" class="btn btn-info">View Cart</a>

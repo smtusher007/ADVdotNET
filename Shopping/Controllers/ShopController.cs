@@ -30,7 +30,8 @@ namespace Shopping.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        [HttpPost]
+
+        [HttpGet]
         public ActionResult AddCart(int Id)
         {
             var db = new ECommerceEntities();
@@ -51,6 +52,17 @@ namespace Shopping.Controllers
                 Session["cart"] = json;
             }
             return RedirectToAction("Index");
+        }
+        //[HttpPost]
+        //public ActionResult AddCart()
+        //{
+        //    return RedirectToAction("Index");
+        //}
+        
+        public ActionResult ViewCart()
+        {
+
+            return View();
         }
         public ActionResult RemoveCart()
         {
