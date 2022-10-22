@@ -1,0 +1,26 @@
+﻿@model ECommereceSite.DB.Order
+
+@{
+    ViewBag.Title = "Order";
+}
+
+<h2>Order</h2>
+
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Oder Details", "OrderDetails") |
+    @Html.ActionLink("Back to List", "Index")
+</p>
