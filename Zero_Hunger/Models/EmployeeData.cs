@@ -11,7 +11,7 @@ namespace Zero_Hunger.Models
         [Required]
         public string Name { get; set; }
         [Required]
-        public string PhoneNumber { get; set; }
+        public string PhoneNo { get; set; }
         [Required]
         public int AreaId { get; set; }
         [Required]
