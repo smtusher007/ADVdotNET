@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ZeroHungerDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Area">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Area" FromRole="Area" ToRole="Employee" />
+    <NavigationProperty Name="Restaurants" Relationship="Self.FK_Restaurant_Area" FromRole="Area" ToRole="Restaurant" />
+    <NavigationProperty Name="DisReqs" Relationship="ZeroHungerDbModel.FK_DisReq_Employee1" FromRole="Area" ToRole="DisReq" />
+  </EntityType>
+  <EntityType Name="DisReq">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="RestaurantId" Type="Int32" Nullable="false" />
+    <Property Name="EmpId" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_DisReq_Employee" FromRole="DisReq" ToRole="Employee" />
+    <NavigationProperty Name="Restaurant" Relationship="Self.FK_DisReq_Restaurant" FromRole="DisReq" ToRole="Restaurant" />
+    <Property Name="AreaId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Area" Relationship="ZeroHungerDbModel.FK_DisReq_Employee1" FromRole="DisReq" ToRole="Area" />
+    <NavigationProperty Name="ReqDetails" Relationship="ZeroHungerDbModel.FK_ReqDetails_DisReq" FromRole="DisReq" ToRole="ReqDetail" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AreaId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Area" Relationship="Self.FK_Employee_Area" FromRole="Employee" ToRole="Area" />
+    <NavigationProperty Name="DisReqs" Relationship="Self.FK_DisReq_Employee" FromRole="Employee" ToRole="DisReq" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Employee_User" FromRole="Employee" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Restaurant">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="AreaId" Type="Int32" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Area" Relationship="Self.FK_Restaurant_Area" FromRole="Restaurant" ToRole="Area" />
+    <NavigationProperty Name="DisReqs" Relationship="Self.FK_DisReq_Restaurant" FromRole="Restaurant" ToRole="DisReq" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Restaurant_User" FromRole="Restaurant" ToRole="User" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_User" FromRole="User" ToRole="Employee" />
+    <NavigationProperty Name="Restaurants" Relationship="Self.FK_Restaurant_User" FromRole="User" ToRole="Restaurant" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Employee_Area">
+    <End Role="Area" Type="Self.Area" Multiplicity="1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Area">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="AreaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Restaurant_Area">
+    <End Role="Area" Type="Self.Area" Multiplicity="1" />
+    <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Area">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Restaurant">
+        <PropertyRef Name="AreaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DisReq_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="DisReq" Type="Self.DisReq" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DisReq">
+        <PropertyRef Name="EmpId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DisReq_Restaurant">
+    <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="1" />
+    <End Role="DisReq" Type="Self.DisReq" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Restaurant">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DisReq">
+        <PropertyRef Name="RestaurantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Restaurant_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Restaurant">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ZeroHungerDbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Areas" EntityType="Self.Area" />
+    <EntitySet Name="DisReqs" EntityType="Self.DisReq" />
+    <EntitySet Name="Employees" EntityType="Self.Employee" />
+    <EntitySet Name="Restaurants" EntityType="Self.Restaurant" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK_Employee_Area" Association="Self.FK_Employee_Area">
+      <End Role="Area" EntitySet="Areas" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Restaurant_Area" Association="Self.FK_Restaurant_Area">
+      <End Role="Area" EntitySet="Areas" />
+      <End Role="Restaurant" EntitySet="Restaurants" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DisReq_Employee" Association="Self.FK_DisReq_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="DisReq" EntitySet="DisReqs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DisReq_Restaurant" Association="Self.FK_DisReq_Restaurant">
+      <End Role="Restaurant" EntitySet="Restaurants" />
+      <End Role="DisReq" EntitySet="DisReqs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_User" Association="Self.FK_Employee_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Restaurant_User" Association="Self.FK_Restaurant_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Restaurant" EntitySet="Restaurants" />
+    </AssociationSet>
+    <EntitySet Name="ReqDetails" EntityType="ZeroHungerDbModel.ReqDetail" />
+    <AssociationSet Name="FK_DisReq_Employee1" Association="ZeroHungerDbModel.FK_DisReq_Employee1">
+      <End Role="Area" EntitySet="Areas" />
+      <End Role="DisReq" EntitySet="DisReqs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReqDetails_DisReq" Association="ZeroHungerDbModel.FK_ReqDetails_DisReq">
+      <End Role="DisReq" EntitySet="DisReqs" />
+      <End Role="ReqDetail" EntitySet="ReqDetails" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ReqDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="FoodName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ReqId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="DisReq" Relationship="ZeroHungerDbModel.FK_ReqDetails_DisReq" FromRole="ReqDetail" ToRole="DisReq" />
+  </EntityType>
+  <Association Name="FK_DisReq_Employee1">
+    <End Type="ZeroHungerDbModel.Area" Role="Area" Multiplicity="1" />
+    <End Type="ZeroHungerDbModel.DisReq" Role="DisReq" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Area">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DisReq">
+        <PropertyRef Name="AreaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReqDetails_DisReq">
+    <End Type="ZeroHungerDbModel.DisReq" Role="DisReq" Multiplicity="1" />
+    <End Type="ZeroHungerDbModel.ReqDetail" Role="ReqDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DisReq">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ReqDetail">
+        <PropertyRef Name="ReqId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

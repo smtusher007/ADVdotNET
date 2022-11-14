@@ -18,6 +18,7 @@ namespace Zero_Hunger.DB
         {
             this.Employees = new HashSet<Employee>();
             this.Restaurants = new HashSet<Restaurant>();
+            this.DisReqs = new HashSet<DisReq>();
         }
     
         public int Id { get; set; }
@@ -25,5 +26,6 @@ namespace Zero_Hunger.DB
     
         public virtual ICollection<Employee> Employees { get; set; }
         public virtual ICollection<Restaurant> Restaurants { get; set; }
+        public virtual ICollection<DisReq> DisReqs { get; set; }
     }
 }

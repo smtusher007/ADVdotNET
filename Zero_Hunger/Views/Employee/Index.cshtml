@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<table class="table table-nowrap mb-0">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Resturent Name</th>
+            <th>Food Details</th>
+            <th>Adress</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var request in Model)
+            {
+                <tr>
+                    <td>@request.Id</td>
+                    @foreach (var rs in ViewBag.Restaurants)
+                    {
+                        if (rs.Id == request.RestaurantId)
+                        {
+                            <td>@rs.Name</td>
+                        }
+                    }
+                    <td>
+                        <table class="table table-nowrap mb-0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Food Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.Foods)
+                                {
+                                    foreach (var food in item)
+                                    {
+                                        <tr>
+                                            @if (food.ReqId == request.Id)
+                                            {
+                                                <td>@food.Id</td>
+                                                <td>@food.FoodName</td>
+                                            }
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                    @foreach (var rs in ViewBag.Restaurants)
+                    {
+                        if (rs.Id == request.RestaurantId)
+                        {
+                            <td>@rs.Address</td>
+                        }
+                    }
+
+                    @if (request.Status == 1)
+                    {
+                        <td>Request Posted</td>
+                    }
+                    @if (request.Status == 2)
+                    {
+                        <td>Employee Assigned</td>
+                    }
+                    @if (request.Status == 3)
+                    {
+                        <td>Product Picked</td>
+                    }
+                    @if (request.Status == 4)
+                    {
+                        <td>Food Distrbuted</td>
+                    }
+                    @if (request.Status == 5)
+                    {
+                        <td>Food wasted</td>
+                    }
+
+                    @if (request.Status == 2)
+                    {
+
+                        <td>
+                            <form action="" method="post">
+                                <button class="btn btn-primary">Update status to picked</button>
+                                <input type="hidden" name="Id" value="@request.Id" />
+                            </form>
+
+                        </td>
+                    }
+                    @if (request.Status == 3)
+                    {
+                        <td>
+                            <form action="" method="post">
+                                <button class="btn btn-primary">Update status to distribute</button>
+                                <input type="hidden" name="Id" value="@request.Id" />
+                            </form>
+                        </td>
+                    }
+                    @if (request.Status != 2 && request.Status != 3)
+                    {
+                        <td></td>
+                    }
+                </tr>
+            }
+        }
+
+    </tbody>
+
+</table>

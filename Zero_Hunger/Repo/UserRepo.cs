@@ -22,8 +22,10 @@ namespace Zero_Hunger.Repo
                 {
                     Id = user.Id,
                     Username = user.Username,
+                    Password = user.Password,
                     Email = user.Email,
                     PhoneNo = user.PhoneNo,
+                    Type = user.Type
 
                 });
 
@@ -38,10 +40,37 @@ namespace Zero_Hunger.Repo
 
             user.Id = u.Id;
             user.Username = u.Username;
+            user.Password = u.Password;
             user.Email = u.Email;
             user.PhoneNo = u.PhoneNo;
+            user.Type = u.Type;
 
             return user;
+        }
+        public static UserModel Get(string Email, string Password, int Type)
+        {
+            var db = new ZeroHungerDbEntities();
+            var user = new UserModel();
+            var us = (from needUser in db.Users
+                      where needUser.Email == Email && needUser.Type == Type
+                      select needUser).SingleOrDefault();
+            if (us != null)
+            {
+                if (us.Password == Password)
+                {
+                    user.Id = us.Id;
+                    user.Email = us.Email;
+                    user.Password = us.Password;
+                    user.Type = us.Type;
+
+                    return user;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            return null;
         }
         public static User Create(UserModel user)
         {
@@ -50,8 +79,10 @@ namespace Zero_Hunger.Repo
             {
                 Id = user.Id,
                 Username = user.Username,
+                Password= user.Password,
                 Email = user.Email,
-                PhoneNo = user.PhoneNo
+                PhoneNo = user.PhoneNo,
+                Type = user.Type
             });
             db.SaveChanges();
             return newUser;

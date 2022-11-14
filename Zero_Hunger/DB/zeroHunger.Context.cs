@@ -30,5 +30,6 @@ namespace Zero_Hunger.DB
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<ReqDetail> ReqDetails { get; set; }
     }
 }

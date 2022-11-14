@@ -14,6 +14,12 @@ namespace Zero_Hunger.Models
         public string Username { get; set; }
 
         [Required]
+        public string Password { get; set; }
+
+        [Required]
+        public int Type { get; set; }
+
+        [Required]
         public string Email { get; set; }
 
         [Required]

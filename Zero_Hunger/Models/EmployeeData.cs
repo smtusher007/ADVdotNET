@@ -7,7 +7,8 @@ using System.Web;
 namespace Zero_Hunger.Models
 {
     public class EmployeeData
-    {
+    { 
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]

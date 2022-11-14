@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2bbdd800a2b241d6abc01be407761997" Name="Diagram1">
+      <Diagram DiagramId="2bbdd800a2b241d6abc01be407761997" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="ZeroHungerDbModel.Area" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="ZeroHungerDbModel.DisReq" Width="1.5" PointX="8.25" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ZeroHungerDbModel.Employee" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
@@ -16,6 +16,9 @@
         <AssociationConnector Association="ZeroHungerDbModel.FK_DisReq_Restaurant" ManuallyRouted="false" />
         <AssociationConnector Association="ZeroHungerDbModel.FK_Employee_User" ManuallyRouted="false" />
         <AssociationConnector Association="ZeroHungerDbModel.FK_Restaurant_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ZeroHungerDbModel.ReqDetail" Width="1.5" PointX="10.5" PointY="4.25" />
+        <AssociationConnector Association="ZeroHungerDbModel.FK_DisReq_Employee1" />
+        <AssociationConnector Association="ZeroHungerDbModel.FK_ReqDetails_DisReq" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

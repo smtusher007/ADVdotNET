@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ZeroHungerDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ZeroHungerDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Area">
           <Key>
             <PropertyRef Name="Id" />
@@ -19,8 +19,8 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="RestaurantId" Type="int" Nullable="false" />
           <Property Name="EmpId" Type="int" Nullable="false" />
-          <Property Name="FoodName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AreaId" Type="int" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -31,6 +31,14 @@
           <Property Name="PhoneNo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="AreaId" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReqDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="FoodName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ReqId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Restaurant">
           <Key>
@@ -48,18 +56,20 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="PhoneNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_DisReq_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Area" Type="Self.Area" Multiplicity="1" />
           <End Role="DisReq" Type="Self.DisReq" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Employee">
+            <Principal Role="Area">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="DisReq">
-              <PropertyRef Name="EmpId" />
+              <PropertyRef Name="AreaId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -99,6 +109,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ReqDetails_DisReq">
+          <End Role="DisReq" Type="Self.DisReq" Multiplicity="1" />
+          <End Role="ReqDetails" Type="Self.ReqDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DisReq">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReqDetails">
+              <PropertyRef Name="ReqId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Restaurant_Area">
           <End Role="Area" Type="Self.Area" Multiplicity="1" />
           <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="*" />
@@ -127,10 +149,11 @@
           <EntitySet Name="Area" EntityType="Self.Area" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DisReq" EntityType="Self.DisReq" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReqDetails" EntityType="Self.ReqDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Restaurant" EntityType="Self.Restaurant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_DisReq_Employee" Association="Self.FK_DisReq_Employee">
-            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Area" EntitySet="Area" />
             <End Role="DisReq" EntitySet="DisReq" />
           </AssociationSet>
           <AssociationSet Name="FK_DisReq_Restaurant" Association="Self.FK_DisReq_Restaurant">
@@ -145,6 +168,10 @@
             <End Role="User" EntitySet="User" />
             <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
+          <AssociationSet Name="FK_ReqDetails_DisReq" Association="Self.FK_ReqDetails_DisReq">
+            <End Role="DisReq" EntitySet="DisReq" />
+            <End Role="ReqDetails" EntitySet="ReqDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_Restaurant_Area" Association="Self.FK_Restaurant_Area">
             <End Role="Area" EntitySet="Area" />
             <End Role="Restaurant" EntitySet="Restaurant" />
@@ -154,8 +181,7 @@
             <End Role="Restaurant" EntitySet="Restaurant" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ZeroHungerDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -167,6 +193,7 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Area" FromRole="Area" ToRole="Employee" />
           <NavigationProperty Name="Restaurants" Relationship="Self.FK_Restaurant_Area" FromRole="Area" ToRole="Restaurant" />
+          <NavigationProperty Name="DisReqs" Relationship="ZeroHungerDbModel.FK_DisReq_Employee1" FromRole="Area" ToRole="DisReq" />
         </EntityType>
         <EntityType Name="DisReq">
           <Key>
@@ -175,10 +202,12 @@
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="RestaurantId" Type="Int32" Nullable="false" />
           <Property Name="EmpId" Type="Int32" Nullable="false" />
-          <Property Name="FoodName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_DisReq_Employee" FromRole="DisReq" ToRole="Employee" />
           <NavigationProperty Name="Restaurant" Relationship="Self.FK_DisReq_Restaurant" FromRole="DisReq" ToRole="Restaurant" />
+          <Property Name="AreaId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Area" Relationship="ZeroHungerDbModel.FK_DisReq_Employee1" FromRole="DisReq" ToRole="Area" />
+          <NavigationProperty Name="ReqDetails" Relationship="ZeroHungerDbModel.FK_ReqDetails_DisReq" FromRole="DisReq" ToRole="ReqDetail" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -216,6 +245,8 @@
           <Property Name="PhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_User" FromRole="User" ToRole="Employee" />
           <NavigationProperty Name="Restaurants" Relationship="Self.FK_Restaurant_User" FromRole="User" ToRole="Restaurant" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_Employee_Area">
           <End Role="Area" Type="Self.Area" Multiplicity="1" />
@@ -319,7 +350,49 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Restaurant" EntitySet="Restaurants" />
           </AssociationSet>
+          <EntitySet Name="ReqDetails" EntityType="ZeroHungerDbModel.ReqDetail" />
+          <AssociationSet Name="FK_DisReq_Employee1" Association="ZeroHungerDbModel.FK_DisReq_Employee1">
+            <End Role="Area" EntitySet="Areas" />
+            <End Role="DisReq" EntitySet="DisReqs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReqDetails_DisReq" Association="ZeroHungerDbModel.FK_ReqDetails_DisReq">
+            <End Role="DisReq" EntitySet="DisReqs" />
+            <End Role="ReqDetail" EntitySet="ReqDetails" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="ReqDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="FoodName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ReqId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DisReq" Relationship="ZeroHungerDbModel.FK_ReqDetails_DisReq" FromRole="ReqDetail" ToRole="DisReq" />
+        </EntityType>
+        <Association Name="FK_DisReq_Employee1">
+          <End Type="ZeroHungerDbModel.Area" Role="Area" Multiplicity="1" />
+          <End Type="ZeroHungerDbModel.DisReq" Role="DisReq" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Area">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DisReq">
+              <PropertyRef Name="AreaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReqDetails_DisReq">
+          <End Type="ZeroHungerDbModel.DisReq" Role="DisReq" Multiplicity="1" />
+          <End Type="ZeroHungerDbModel.ReqDetail" Role="ReqDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DisReq">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReqDetail">
+              <PropertyRef Name="ReqId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -337,10 +410,10 @@
           <EntitySetMapping Name="DisReqs">
             <EntityTypeMapping TypeName="ZeroHungerDbModel.DisReq">
               <MappingFragment StoreEntitySet="DisReq">
+                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="RestaurantId" ColumnName="RestaurantId" />
                 <ScalarProperty Name="EmpId" ColumnName="EmpId" />
-                <ScalarProperty Name="FoodName" ColumnName="FoodName" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -370,10 +443,21 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="ZeroHungerDbModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReqDetails">
+            <EntityTypeMapping TypeName="ZeroHungerDbModel.ReqDetail">
+              <MappingFragment StoreEntitySet="ReqDetails">
+                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+                <ScalarProperty Name="FoodName" ColumnName="FoodName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

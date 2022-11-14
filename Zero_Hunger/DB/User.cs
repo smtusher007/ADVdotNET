@@ -24,6 +24,8 @@ namespace Zero_Hunger.DB
         public string Username { get; set; }
         public string Email { get; set; }
         public string PhoneNo { get; set; }
+        public string Password { get; set; }
+        public int Type { get; set; }
     
         public virtual ICollection<Employee> Employees { get; set; }
         public virtual ICollection<Restaurant> Restaurants { get; set; }

@@ -14,13 +14,20 @@ namespace Zero_Hunger.DB
     
     public partial class DisReq
     {
+        public DisReq()
+        {
+            this.ReqDetails = new HashSet<ReqDetail>();
+        }
+    
         public int Id { get; set; }
         public int RestaurantId { get; set; }
         public int EmpId { get; set; }
-        public string FoodName { get; set; }
-        public string Status { get; set; }
+        public int Status { get; set; }
+        public int AreaId { get; set; }
     
         public virtual Employee Employee { get; set; }
         public virtual Restaurant Restaurant { get; set; }
+        public virtual Area Area { get; set; }
+        public virtual ICollection<ReqDetail> ReqDetails { get; set; }
     }
 }
