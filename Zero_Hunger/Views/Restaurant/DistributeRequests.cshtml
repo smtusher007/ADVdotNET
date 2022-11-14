@@ -1,0 +1,72 @@
+﻿@model Zero_Hunger.Models.DisReqModel
+@{
+    ViewBag.Title = "DistributeRequests";
+    ViewBag.Image = ViewBag.Restaurant.Image;
+    ViewBag.Name = ViewBag.Restaurant.Name;
+}
+
+
+<form method="post" action="/Restaurant/AddToCart">
+    <div class="row form-group">
+        <div class="col-sm-12">
+            <input type="text" class="form-control" id="FoodName" name="FoodName"
+                   placeholder="Food Name">
+            <small id="emailHelp" class="text-danger">@Html.ValidationMessage("FoodName")</small>
+        </div>
+    </div>
+    <input type="hidden" name="Id" value="" />
+
+    <div class="text-end">
+        <button type="submit" class="btn btn-primary">Add to cart</button>
+    </div>
+</form>
+
+
+
+
+<h5 class="card-title">Distribute Request</h5>
+
+<table class="table table-nowrap mb-0">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Food Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (ViewBag.FoodDetails != null)
+        {
+            foreach (var food in ViewBag.FoodDetails)
+            {
+                <tr>
+                    <td>@food.Id</td>
+                    <td>@food.FoodName</td>
+                    <td><a class="btn btn-danger" href="/Restaurant/RemoveFromCart?Id=@food.Id">Remove from Cart</a></td>
+                </tr>
+
+            }
+
+        }
+    </tbody>
+
+</table>
+
+@if (ViewBag.FoodDetails != null)
+{
+    <form method="post" action="">
+        <div class="row form-group">
+            
+        </div>
+
+        <div class="text-end">
+            <button type="submit" class="btn btn-primary">Post request</button>
+        </div>
+    </form>
+}
+
+
+<script>
+    document.getElementById("DistributeRequest").className = "active";
+</script>
+

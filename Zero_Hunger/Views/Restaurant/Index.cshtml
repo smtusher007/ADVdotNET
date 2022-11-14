@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    ViewBag.Name = ViewBag.Restaurant.Name;
+
+}
+
+<h5 class="card-title">Distribute Request</h5>
+
+<table class="table table-nowrap mb-0">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Status</th>
+            <th>Food Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var request in Model)
+            {
+                <tr>
+                    <td>@request.Id</td>
+                    @if (request.Status == 1)
+                    {
+                        <td>Request Posted</td>
+                    }
+                    @if (request.Status == 2)
+                    {
+                        <td>Employee Assigned</td>
+                    }
+                    @if (request.Status == 3)
+                    {
+                        <td>Product Picked</td>
+                    }
+                    @if (request.Status == 4)
+                    {
+                        <td>Food Distrbuted</td>
+                    }
+                    @if (request.Status == 5)
+                    {
+                        <td>Food wasted</td>
+                    }
+                    <td>
+                        <table class="table table-nowrap mb-0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Food Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.Foods)
+                                {
+                                    foreach (var food in item)
+                                    {
+                                        <tr>
+                                            @if (food.DistributeRequestId == request.Id)
+                                            {
+                                                <td>@food.Id</td>
+                                                <td>@food.FoodName</td>
+                                            }
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+
+</table>
+
+<script>
+    document.getElementById("Dashboard").className = "active";
+</script>
+

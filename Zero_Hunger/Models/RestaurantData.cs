@@ -8,6 +8,7 @@ namespace Zero_Hunger.Models
 {
     public class RestaurantData
     {
+        public int Id { get; set; }
         [Required]
         public int UserId { get; set; }
         [Required]
